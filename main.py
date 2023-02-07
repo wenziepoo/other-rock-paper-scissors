@@ -1,9 +1,10 @@
 def on_button_pressed_a():
-    global counter2
-    counter2 = [0, 0]
+    global counter
+    counter = [0, 0]
 input.on_button_pressed(Button.A, on_button_pressed_a)
 
 def on_received_string(receivedString):
+    global counter
     if can == True:
         if choice == "A":
             if receivedString == "C":
@@ -26,27 +27,51 @@ radio.on_received_string(on_received_string)
 def on_gesture_shake():
     shake()
 input.on_gesture(Gesture.SHAKE, on_gesture_shake)
+def on_button_pressed_b():
+    global counter
+    score = "" + str(counter[0]) + " - " + ("" + str(counter[1]))
+    basic.show_string(score)
+
+    
+input.on_button_pressed(Button.B, on_button_pressed_b)
 
 def shake():
-    global choice, score, can2
+    global choice, can
     choice = items[randint(0, 2)]
     radio.set_group(8)
     radio.send_string("" + (choice))
-    if choice == 'A':
-        print(1)
-    elif choice == 'B':
-        print(1)
+    if choice == "A":
+        basic.show_leds("""
+            . # # # .
+                        # # # # #
+                        # # # # #
+                        . # # # 1#
+                        . . # # .
+        """)
+    elif choice == "B":
+        basic.show_leds("""
+            . . . . .
+                        . # # # .
+                        . # # # .
+                        . # # # .
+                        . # # # .
+        """)
     else:
-        print(1)
+        basic.show_leds("""
+            . . # . .
+                        . # . . .
+                        . # . . #
+                        # # # # .
+                        . # . . .
+        """)
+    
+    can = True
 
-    score = "" + str(counter[0]) + " - " + ("" + str(counter[1]))
-    can2 = True
-can2 = False
 score = ""
 choice = ""
 counter2: List[number] = []
 counter: List[number] = []
 items: List[str] = []
-can3 = False
+can = False
 items = ["A", "B", "C"]
 counter = [0, 0]
